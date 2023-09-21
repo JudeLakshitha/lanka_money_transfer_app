@@ -62,10 +62,13 @@ class CommonTextFieldState extends State<CommonTextField> {
               borderRadius: AppStyles.textFieldCornerCircularRadius10,
             ),
             filled: false,
+            contentPadding: EdgeInsets.zero
           ),
           cursorColor: AppColors.appGrey,
           keyboardType: widget.textInputType,
-          style: const TextStyle(color: AppColors.appGrey),
+          style: const TextStyle(
+              color: AppColors.appGrey,
+          ),
         ),
       ),
     );

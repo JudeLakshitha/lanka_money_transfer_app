@@ -11,15 +11,13 @@ class TextFieldTag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      text,
-      textAlign: TextAlign.left,
-      style:  TextStyle(
-        fontSize: 16.0,
-        fontWeight: FontWeight.w500,
-        color: AppColors.appGrey,
-        //fontFamily: 'Poppins',
-        )
-      );
+    return Text(text,
+        textAlign: TextAlign.left,
+        style: const TextStyle(
+          fontSize: 16.0,
+          fontWeight: FontWeight.w500,
+          color: AppColors.appGrey,
+          //fontFamily: 'Poppins',
+        ));
   }
 }

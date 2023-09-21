@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lanka_money_transfer_app/components/CommonTitleTextStyle.dart';
 import 'package:lanka_money_transfer_app/components/buttons/commonBlueButton.dart';
 import 'package:lanka_money_transfer_app/components/buttons/commonGreenButton.dart';
+import 'package:lanka_money_transfer_app/components/buttons/commonTextButton.dart';
 import 'package:lanka_money_transfer_app/components/buttons/commonWhiteButton.dart';
 import 'package:lanka_money_transfer_app/components/commonAppBar.dart';
 import 'package:lanka_money_transfer_app/components/commonTextField.dart';
@@ -129,7 +130,7 @@ class LoginScreenState extends State<LoginScreen> {
                 },
                 text: 'Login',
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height:5),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 25.0),
                 child: Row(
@@ -140,11 +141,14 @@ class LoginScreenState extends State<LoginScreen> {
                       color: AppColors.appGrey,
                       fontSize: 12,
                     ),
-                    SizedBox(width: 5),
-                    CommonTextStyle(
-                        text: 'Reset password?',
-                        color: AppColors.appGreen,
-                        fontSize: 12),
+                    // CommonTextStyle(
+                    //     text: 'Reset password?',
+                    //     color: AppColors.appGreen,
+                    //     fontSize: 12),
+                   CommonTextButton(
+                       text: 'Reset Password',
+                       color: AppColors.appGreen
+                   )
                   ],
                 ),
               )

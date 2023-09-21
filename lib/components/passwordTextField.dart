@@ -19,6 +19,10 @@ class PasswordTextField extends StatefulWidget {
 
 class PasswordTextFieldState extends State<PasswordTextField> {
   //static BorderRadius cornerRadius = BorderRadius.circular(10);
+  String _password = '';
+  String _confirmPassword = '';
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +59,7 @@ class PasswordTextFieldState extends State<PasswordTextField> {
                 borderRadius: AppStyles.textFieldCornerCircularRadius10,
               ),
               filled: false,
+              contentPadding: EdgeInsets.zero,
               prefixIconColor: AppColors.appGrey,
               suffixIcon: widget.suffixIconButton),
         ),

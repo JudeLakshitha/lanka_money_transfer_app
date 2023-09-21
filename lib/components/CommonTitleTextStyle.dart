@@ -15,7 +15,7 @@ class CommonTitleTextStyle extends StatelessWidget {
       text,
       textAlign: TextAlign.center,
       style: const TextStyle(
-        fontSize: 23.0,
+        fontSize: 25.0,
         fontWeight: FontWeight.bold,
         color: AppColors.appGrey,
       ),
