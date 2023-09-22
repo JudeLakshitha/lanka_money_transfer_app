@@ -1,157 +1,138 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:lanka_money_transfer_app/components/CommonTitleTextStyle.dart';
-import 'package:lanka_money_transfer_app/components/buttons/commonBlueButton.dart';
-import 'package:lanka_money_transfer_app/components/buttons/commonGreenButton.dart';
-import 'package:lanka_money_transfer_app/components/buttons/commonTextButton.dart';
-import 'package:lanka_money_transfer_app/components/buttons/commonWhiteButton.dart';
-import 'package:lanka_money_transfer_app/components/commonAppBar.dart';
-import 'package:lanka_money_transfer_app/components/commonTextField.dart';
-import 'package:lanka_money_transfer_app/components/commonTextFieldTag.dart';
-import 'package:lanka_money_transfer_app/components/commonTextStyle.dart';
-import 'package:lanka_money_transfer_app/components/passwordTextField.dart';
-
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:lanka_money_transfer_app/widgets/reusable_widgets.dart';
 import '../utils/style.dart';
 
 class LoginScreen extends StatefulWidget {
-  LoginScreen({super.key});
-
-  final usernameController = TextEditingController();
-  final passwordController = TextEditingController();
+  const LoginScreen({super.key});
 
   @override
   LoginScreenState createState() => LoginScreenState();
 }
 
 class LoginScreenState extends State<LoginScreen> {
-  bool _userNameValidate = false;
-  bool _passwordValidate = false;
+  bool _userNameValidattion = false;
+  bool _passwordValidation = false;
   bool passwordVisibility = true;
+  bool obscureText = true;
   Color _visibilityColor = AppColors.appGrey;
 
-  void signUserIn() {
+  TextEditingController userNameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  FocusNode passwordFocusNode = FocusNode();
+
+  //final AuthValidators authValidator = AuthValidators();
+  final GlobalKey<FormState> _password = GlobalKey<FormState>();
+  final GlobalKey<FormState> _confirmPassword = GlobalKey<FormState>();
+
+  void toggleObscureText() {
     setState(() {
-      widget.usernameController.text.isEmpty
-          ? _userNameValidate = true
-          : _userNameValidate = false;
-      widget.passwordController.text.isEmpty
-          ? _passwordValidate = true
-          : _passwordValidate = false;
+      obscureText = !obscureText;
     });
   }
 
   @override
   void dispose() {
     //widget.usernameController.dispose();
-    widget.passwordController.dispose();
+    passwordController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
-
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: BaseAppBar(
-        appBar: AppBar(),
-        title: const Text(''),
-      ),
+      appBar: appBar(const Text('')),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
-            children: [
+            children: <Widget>[
               const SizedBox(width: double.infinity),
-              Container(
-                width: screenWidth / 2,
-                height: screenHeight / 3.75,
-                alignment: Alignment.center,
-                child: Image.asset('assets/images/login_screen_image.png'),
-              ),
-              const CommonTitleTextStyle(text: 'Login'),
+              logoWidget(context, "assets/images/sign_up_screen_logo.png"),
+              titleText('Login'),
               const SizedBox(height: 8.0),
-              const CommonTextStyle(
-                text: 'Welcome to Lanka Money Transfer',
-                color: AppColors.appGrey,
-                fontSize: 12,
-              ),
+              baseText('Enter the username & password to log-in',
+                  FontWeight.normal, AppColors.appGrey),
               const SizedBox(height: 20),
-              const Align(
+              Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25.0),
-                  child: TextFieldTag(text: 'Username'),
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: textFieldTag('Username'),
                 ),
               ),
               const SizedBox(height: 8.0),
-              CommonTextField(
-                textInputType: TextInputType.text,
-                controller: widget.usernameController,
-                validation: _userNameValidate,
-                prefixIcon:
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: baseTextField(
+                    userNameController,
                     const ImageIcon(AssetImage("assets/icons/icon_at.png")),
-                suffixIcon: const Icon(Icons.check_circle_outline),
+                    const ImageIcon(
+                        AssetImage('assets/icons/validate_mark.png')),
+                    TextInputType.text,
+                    'Username field cannot be empty'),
               ),
               const SizedBox(height: 20),
-              const Align(
+              Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25.0),
-                  child: TextFieldTag(text: 'Password'),
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: textFieldTag('Password'),
                 ),
               ),
               const SizedBox(height: 8.0),
-              PasswordTextField(
-                controller: widget.passwordController,
-                passwordVisibility: passwordVisibility,
-                suffixIconButton: IconButton(
-                  onPressed: () {
-                    setState(() {
-                      passwordVisibility = !passwordVisibility;
-                      passwordVisibility
-                          ? _visibilityColor = AppColors.appGrey
-                          : _visibilityColor = AppColors.appGreen;
-                    });
-                  },
-                  icon: Icon(passwordVisibility
-                      ? Icons.visibility
-                      : Icons.visibility_off),
-                  color: _visibilityColor,
-                  splashColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: passwordTextField(passwordController, obscureText,
+                    passwordFocusNode, toggleObscureText),
+              ),
+              const SizedBox(height: 20.0),
+              SizedBox(
+                height: 50,
+                width: double.infinity,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: elevatedBlueButton(
+                    context,
+                    'Login',
+                    () {},
+                  ),
                 ),
               ),
               const SizedBox(height: 20),
-              GreenButton(
-                onTap: () {
-                  signUserIn();
-                },
-                text: 'Login',
-              ),
-              const SizedBox(height:5),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 25.0),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CommonTextStyle(
-                      text: 'Cannot remember password?',
-                      color: AppColors.appGrey,
-                      fontSize: 12,
+                    Text(
+                      "Cannot remember the password ?",
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: AppColors.appGrey,
+                        fontSize: 12,
+                      ),
                     ),
-                    // CommonTextStyle(
-                    //     text: 'Reset password?',
-                    //     color: AppColors.appGreen,
-                    //     fontSize: 12),
-                   CommonTextButton(
-                       text: 'Reset Password',
-                       color: AppColors.appGreen
-                   )
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginScreen()));
+                      },
+                      child: const Text(
+                        " Reset Password",
+                        style: TextStyle(
+                            color: AppColors.appBlue,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),

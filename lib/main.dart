@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lanka_money_transfer_app/screens/boarding_screen.dart';
+import 'package:lanka_money_transfer_app/screens/forget_password_screen.dart';
 import 'package:lanka_money_transfer_app/screens/login_screen.dart';
-import 'package:lanka_money_transfer_app/screens/sign_up_2.dart';
+import 'package:lanka_money_transfer_app/screens/otp_screen.dart';
+import 'package:lanka_money_transfer_app/screens/reset_password_screen.dart';
 import 'package:lanka_money_transfer_app/screens/sign_up_screen.dart';
 
 void main() {
@@ -24,7 +26,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(fontFamily: 'Poppins'),
       debugShowCheckedModeBanner: false,
       //home: LoginScreen(),
-      home: SignUpScreen2(),
+      //home: const SignUpScreen(),
+      //home: const ResetPasswordScreen(),
+      //home:  OtpScreen(),
+      home: const BoardingScreen(),
     );
   }
 }

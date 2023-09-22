@@ -1,54 +1,87 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:lanka_money_transfer_app/components/CommonTitleTextStyle.dart';
-import 'package:lanka_money_transfer_app/components/buttons/commonBlueButton.dart';
-import 'package:lanka_money_transfer_app/components/buttons/commonGreenButton.dart';
-import 'package:lanka_money_transfer_app/components/buttons/commonTextButton.dart';
-import 'package:lanka_money_transfer_app/components/buttons/commonWhiteButton.dart';
-import 'package:lanka_money_transfer_app/components/commonAppBar.dart';
-import 'package:lanka_money_transfer_app/components/commonTextField.dart';
-import 'package:lanka_money_transfer_app/components/commonTextFieldTag.dart';
-import 'package:lanka_money_transfer_app/components/commonTextStyle.dart';
-import 'package:lanka_money_transfer_app/components/passwordTextField.dart';
-import 'package:lanka_money_transfer_app/components/commonCheckBox.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:lanka_money_transfer_app/screens/login_screen.dart';
+import 'package:lanka_money_transfer_app/screens/otp_screen.dart';
 import 'package:lanka_money_transfer_app/widgets/reusable_widgets.dart';
-
-import '../components/buttons/commonDropDownButton.dart';
 import '../utils/style.dart';
 
-const List<String> list = <String>['One', 'Two', 'Three', 'Four'];
+const List<String> countryList = <String>[
+  'Select Country',
+  'Sri Lanka',
+  'Germany',
+  'Ireland',
+  'Canada',
+  'United State of America',
+  'United Kingdom'
+];
+
+const List<String> countryCodeList = <String>[
+  '+93',
+  '+355',
+  '+213',
+  '+1684',
+  '+376',
+  '+244',
+  '+1264',
+  '+1268',
+  '+54',
+  '+374',
+  '+61',
+  '+94',
+];
 
 class SignUpScreen extends StatefulWidget {
-  SignUpScreen({super.key});
-
-  final usernameController = TextEditingController();
-  final passwordController = TextEditingController();
+  const SignUpScreen({super.key});
 
   @override
   SignUpScreenState createState() => SignUpScreenState();
 }
 
 class SignUpScreenState extends State<SignUpScreen> {
-  bool _userNameValidate = false;
-  bool _passwordValidate = false;
+  bool _nameValidattion = false;
+  bool _addressValidation = false;
+  bool _mobileNoValidation = false;
+  bool _nicPassportValidation = false;
+  bool _emailValidation = false;
+  bool _passwordValidation = false;
+  bool _confirmPasswordValidation = false;
   bool passwordVisibility = true;
+  bool obscureText = true;
+  bool confirmObscureText = true;
   Color _visibilityColor = AppColors.appGrey;
 
-  // void signUserIn() {
-  //   setState(() {
-  //     widget.usernameController.text.isEmpty
-  //         ? _userNameValidate = true
-  //         : _userNameValidate = false;
-  //     widget.passwordController.text.isEmpty
-  //         ? _passwordValidate = true
-  //         : _passwordValidate = false;
-  //   });
-  // }
+  TextEditingController nameController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
+  TextEditingController mobileNoController = TextEditingController();
+  TextEditingController nicPassportController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
+
+  FocusNode passwordFocusNode = FocusNode();
+  FocusNode confirmPasswordFocusNode = FocusNode();
+
+  //final AuthValidators authValidator = AuthValidators();
+  final GlobalKey<FormState> _password = GlobalKey<FormState>();
+  final GlobalKey<FormState> _confirmPassword = GlobalKey<FormState>();
+
+  void toggleObscureText() {
+    setState(() {
+      obscureText = !obscureText;
+    });
+  }
+
+  void toggleConfirmObscureText() {
+    setState(() {
+      confirmObscureText = !confirmObscureText;
+    });
+  }
 
   @override
   void dispose() {
     //widget.usernameController.dispose();
-    widget.passwordController.dispose();
+    passwordController.dispose();
     super.dispose();
   }
 
@@ -59,270 +92,285 @@ class SignUpScreenState extends State<SignUpScreen> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: BaseAppBar(
-        appBar: AppBar(),
-        title: const Text(''),
-      ),
+      appBar: appBar(const Text('')),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
               const SizedBox(width: double.infinity),
-              // Container(
-              //   width: screenWidth / 2,
-              //   height: screenHeight / 3.75,
-              //   alignment: Alignment.center,
-              //   child: Image.asset('assets/images/sign_up_screen_logo.png'),
-              // ),
               logoWidget(context, "assets/images/sign_up_screen_logo.png"),
-              const CommonTitleTextStyle(text: 'Sign up'),
+              titleText('Sign up'),
               const SizedBox(height: 8.0),
-              const CommonTextStyle(
-                text: 'Enter below details to complete the sign up process',
-                color: AppColors.appGrey,
-                fontSize: 12,
-              ),
+              baseText('Enter below details to complete the sign up process',
+                  FontWeight.normal, AppColors.appGrey),
               const SizedBox(height: 20),
-              const Align(
+              Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25.0),
-                  child: TextFieldTag(text: 'Name'),
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: textFieldTag('Name'),
                 ),
               ),
               const SizedBox(height: 8.0),
-              CommonTextField(
-                key: widget.key,
-                textInputType: TextInputType.text,
-                controller: widget.usernameController,
-                validation: _userNameValidate,
-                prefixIcon:
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: baseTextField(
+                    nameController,
                     const ImageIcon(AssetImage("assets/icons/user_icon.png")),
-                suffixIcon: const Icon(null),
+                    const ImageIcon(null),
+                    TextInputType.text,
+                    'Name field cannot be empty'),
               ),
               const SizedBox(height: 10),
-              const Align(
+              Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25.0),
-                  child: TextFieldTag(text: 'Address'),
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: textFieldTag('Address'),
                 ),
               ),
               const SizedBox(height: 8.0),
-              CommonTextField(
-                textInputType: TextInputType.text,
-                controller: widget.usernameController,
-                validation: _userNameValidate,
-                prefixIcon: const ImageIcon(
-                    AssetImage("assets/icons/location_icon.png")),
-                suffixIcon: const Icon(null),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: baseTextField(
+                    addressController,
+                    const ImageIcon(
+                        AssetImage("assets/icons/location_icon.png")),
+                    const ImageIcon(null),
+                    TextInputType.text,
+                    'Address field cannot be empty'),
               ),
               const SizedBox(height: 10),
-              const Align(
+              Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25.0),
-                  child: TextFieldTag(text: 'Country'),
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: textFieldTag('Country'),
                 ),
               ),
               const SizedBox(height: 8.0),
-              // CommonTextField(
-              //   textInputType: TextInputType.text,
-              //   controller: widget.usernameController,
-              //   validation: _userNameValidate,
-              //   prefixIcon:
-              //       const ImageIcon(AssetImage("assets/icons/icon_at.png")),
-              //   suffixIcon: Icon(null),
-              // ),
-              const BaseDropDownButton(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: ButtonTheme(
+                    alignedDropdown: true,
+                    child: dropdownFormField(
+                      countryList,
+                      const ImageIcon(
+                          AssetImage("assets/icons/arrow_back_icon.png")),
+                    )),
+              ),
+              //const BaseDropDownButton(),
               const SizedBox(height: 10),
-              const Align(
+              Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25.0),
-                  child: TextFieldTag(text: 'Mobile Number'),
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: textFieldTag('Mobile Number'),
                 ),
               ),
               const SizedBox(height: 8.0),
-              // CommonTextField(
-              //   textInputType: TextInputType.text,
-              //   controller: widget.usernameController,
-              //   validation: _userNameValidate,
-              //   prefixIcon:
-              //       const ImageIcon(AssetImage("assets/icons/icon_at.png")),
-              //   suffixIcon: Icon(null),
-              // ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 25.0),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CommonTextStyle(
-                      text: 'Are you a member ?',
-                      color: AppColors.appGrey,
-                      fontSize: 12,
-                    ),
-                    CommonTextButton(text: 'Login', color: AppColors.appBlue),
-                    CommonTextStyle(
-                      text: 'now',
-                      color: AppColors.appGrey,
-                      fontSize: 12,
-                    ),
+                    Expanded(
+                        flex: 2,
+                        child: dropdownButtonFormField(
+                            countryCodeList,
+                            const ImageIcon(
+                                AssetImage("assets/icons/arrow_back_icon.png")),
+                            const ImageIcon(null))),
+                    const Spacer(),
+                    Expanded(
+                        flex: 3,
+                        child: baseTextField(
+                            mobileNoController,
+                            const ImageIcon(null),
+                            const ImageIcon(
+                                AssetImage('assets/icons/validate_mark.png')),
+                            TextInputType.number,
+                            'Number cannot be empty')),
                   ],
                 ),
               ),
               const SizedBox(height: 10),
-              const Align(
+              Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25.0),
-                  child: TextFieldTag(text: 'NIC/Passport No'),
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: textFieldTag('NIC/Passport No'),
                 ),
               ),
               const SizedBox(height: 8.0),
-              CommonTextField(
-                textInputType: TextInputType.text,
-                controller: widget.usernameController,
-                validation: _userNameValidate,
-                prefixIcon:
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: baseTextField(
+                    nicPassportController,
+                    const ImageIcon(AssetImage('assets/icons/id_icon.png')),
+                    const ImageIcon(
+                        AssetImage('assets/icons/validate_mark.png')),
+                    TextInputType.text,
+                    'NIC/Passport field cannot be empty'),
+              ),
+              const SizedBox(height: 10),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: textFieldTag('E-mail'),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: baseTextField(
+                    emailController,
                     const ImageIcon(AssetImage("assets/icons/icon_at.png")),
-                suffixIcon: Icon(null),
+                    const ImageIcon(
+                        AssetImage('assets/icons/validate_mark.png')),
+                    TextInputType.emailAddress,
+                    'Email field cannot be empty'),
               ),
               const SizedBox(height: 10),
-              const Align(
+              Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25.0),
-                  child: TextFieldTag(text: 'E-mail'),
-                ),
-              ),
-              CommonTextField(
-                textInputType: TextInputType.text,
-                controller: widget.usernameController,
-                validation: _userNameValidate,
-                prefixIcon:
-                    const ImageIcon(AssetImage("assets/icons/icon_at.png")),
-                suffixIcon: Icon(null),
-              ),
-              const SizedBox(height: 10),
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25.0),
-                  child: TextFieldTag(text: 'Password'),
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: textFieldTag('Password'),
                 ),
               ),
               const SizedBox(height: 8.0),
-              PasswordTextField(
-                controller: widget.passwordController,
-                passwordVisibility: passwordVisibility,
-                suffixIconButton: IconButton(
-                  onPressed: () {
-                    setState(() {
-                      passwordVisibility = !passwordVisibility;
-                      passwordVisibility
-                          ? _visibilityColor = AppColors.appGrey
-                          : _visibilityColor = AppColors.appGreen;
-                    });
-                  },
-                  icon: Icon(passwordVisibility
-                      ? Icons.visibility
-                      : Icons.visibility_off),
-                  color: _visibilityColor,
-                  splashColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
-                ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: passwordTextField(passwordController, obscureText,
+                    confirmPasswordFocusNode, toggleObscureText),
               ),
               const SizedBox(height: 10),
-              const Align(
+               Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 25.0),
-                  child: TextFieldTag(text: 'Confirm Password'),
+                  child: textFieldTag('Confirm Password'),
                 ),
               ),
               const SizedBox(height: 8.0),
-              PasswordTextField(
-                controller: widget.passwordController,
-                passwordVisibility: passwordVisibility,
-                suffixIconButton: IconButton(
-                  onPressed: () {
-                    setState(() {
-                      passwordVisibility = !passwordVisibility;
-                      passwordVisibility
-                          ? _visibilityColor = AppColors.appGrey
-                          : _visibilityColor = AppColors.appGreen;
-                    });
-                  },
-                  icon: Icon(passwordVisibility
-                      ? Icons.visibility
-                      : Icons.visibility_off),
-                  color: _visibilityColor,
-                  splashColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
-                ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: passwordTextField(
+                    confirmPasswordController,
+                    confirmObscureText,
+                    passwordFocusNode,
+                    toggleConfirmObscureText),
               ),
               const SizedBox(height: 10),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 25.0),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: Row(
                   children: [
-                    Flexible(
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: const BaseCheckbox(),
-                      ),
+                     Flexible(
+                      child: baseCheckBox(true),
                     ),
-                    Flexible(
-                      child: CommonTextStyle(
-                          text: "Agree",
+                    const Flexible(
+                      flex: 1,
+                      child: Text(
+                        "Agree",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
                           color: AppColors.appGrey,
-                          fontSize: 16),
-                    ),
-                    SizedBox(width: 3),
-                    Flexible(
-                      flex: 5,
-                      child: CommonTextStyleBold(
-                        text: "terms and conditions",
-                        color: AppColors.appGrey,
-                        fontSize: 16,
+                          fontSize: 12,
+                        ),
                       ),
                     ),
+                    Flexible(
+                      flex: 2,
+                      child: GestureDetector(
+                        onTap: () {
+                          Fluttertoast.showToast(
+                            msg: "Pressed Terms & conditions",
+                            toastLength: Toast.LENGTH_SHORT,
+                          );
+                        },
+                        child: const Text(
+                          " terms and conditions",
+                          style: TextStyle(
+                              color: AppColors.appGrey,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),
               const SizedBox(height: 5),
-              BlueButton(
-                onTap: () {},
-                text: 'Register',
+              SizedBox(
+                height: 50,
+                width: double.infinity,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25.0),
+                  child: elevatedBlueButton(
+                    context,
+                    'Register',
+                    () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => OtpScreen()));
+                    },
+                  ),
+                ),
               ),
               const SizedBox(height: 10),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 25.0),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CommonTextStyle(
-                      text: 'Are you a member ?',
-                      color: AppColors.appGrey,
-                      fontSize: 12,
+                    const Flexible(
+                      flex: 2,
+                      child: Text(
+                        "Are you a member ?",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          color: AppColors.appGrey,
+                          fontSize: 12,
+                        ),
+                      ),
                     ),
-                    CommonTextButton(text: 'Login', color: AppColors.appBlue),
-                    CommonTextStyle(
-                      text: 'now',
-                      color: AppColors.appGrey,
-                      fontSize: 12,
+                    Flexible(
+                      flex: 1,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginScreen()));
+                        },
+                        child: const Text(
+                          " Login",
+                          style: TextStyle(
+                              color: AppColors.appBlue,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                    const Flexible(
+                      flex: 1,
+                      child: Text(
+                        " now",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          color: AppColors.appGrey,
+                          fontSize: 12,
+                        ),
+                      ),
                     ),
                   ],
                 ),
               ),
-              Container(
-                // width: screenWidth / 2,
-                // height: screenHeight / 3.75,
-                padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                alignment: Alignment.center,
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 25.0),
                 child: Image.asset('assets/images/dfcc_bank_logo.png'),
               ),
             ],
