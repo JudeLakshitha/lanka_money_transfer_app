@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lanka_money_transfer_app/screens/login_screen.dart';
@@ -39,17 +39,17 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class SignUpScreenState extends State<SignUpScreen> {
-  bool _nameValidattion = false;
-  bool _addressValidation = false;
-  bool _mobileNoValidation = false;
-  bool _nicPassportValidation = false;
-  bool _emailValidation = false;
-  bool _passwordValidation = false;
-  bool _confirmPasswordValidation = false;
+  // bool _nameValidattion = false;
+  // bool _addressValidation = false;
+  // bool _mobileNoValidation = false;
+  // bool _nicPassportValidation = false;
+  // bool _emailValidation = false;
+  // bool _passwordValidation = false;
+  // bool _confirmPasswordValidation = false;
   bool passwordVisibility = true;
   bool obscureText = true;
   bool confirmObscureText = true;
-  Color _visibilityColor = AppColors.appGrey;
+  //Color _visibilityColor = AppColors.appGrey;
 
   TextEditingController nameController = TextEditingController();
   TextEditingController addressController = TextEditingController();
@@ -63,8 +63,8 @@ class SignUpScreenState extends State<SignUpScreen> {
   FocusNode confirmPasswordFocusNode = FocusNode();
 
   //final AuthValidators authValidator = AuthValidators();
-  final GlobalKey<FormState> _password = GlobalKey<FormState>();
-  final GlobalKey<FormState> _confirmPassword = GlobalKey<FormState>();
+  // final GlobalKey<FormState> _password = GlobalKey<FormState>();
+  // final GlobalKey<FormState> _confirmPassword = GlobalKey<FormState>();
 
   void toggleObscureText() {
     setState(() {
@@ -87,8 +87,6 @@ class SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -249,7 +247,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: textFieldTag('Confirm Password'),
                 ),
               ),
@@ -307,7 +305,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                 height: 50,
                 width: double.infinity,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: elevatedBlueButton(
                     context,
                     'Register',
@@ -315,7 +313,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => OtpScreen()));
+                              builder: (context) => const OtpScreen()));
                     },
                   ),
                 ),
@@ -344,7 +342,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => LoginScreen()));
+                                  builder: (context) => const LoginScreen()));
                         },
                         child: const Text(
                           " Login",

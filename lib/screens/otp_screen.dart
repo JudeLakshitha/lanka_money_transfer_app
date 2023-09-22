@@ -12,10 +12,10 @@ class OtpScreen extends StatefulWidget {
 }
 
 class OtpScreenState extends State<OtpScreen> {
-  bool _userNameValidate = false;
-  bool _passwordValidate = false;
+  // bool _userNameValidate = false;
+  // bool _passwordValidate = false;
   bool passwordVisibility = true;
-  Color _visibilityColor = AppColors.appGrey;
+  // Color _visibilityColor = AppColors.appGrey;
 
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
@@ -29,13 +29,10 @@ class OtpScreenState extends State<OtpScreen> {
 
   @override
   Widget build(context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: appBar(
-        Text(''),
+        const Text(''),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -99,7 +96,7 @@ class OtpScreenState extends State<OtpScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => LoginScreen()));
+                                  builder: (context) => const LoginScreen()));
                         },
                         child: const Text(
                           " Resend again",
@@ -121,6 +118,3 @@ class OtpScreenState extends State<OtpScreen> {
   }
 }
 
-NavigateToLogin() {
-  MaterialPageRoute(builder: (context) => LoginScreen());
-}

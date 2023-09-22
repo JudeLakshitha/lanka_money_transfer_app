@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lanka_money_transfer_app/screens/reset_password_screen.dart';
 import 'package:lanka_money_transfer_app/screens/sign_up_screen.dart';
 import 'package:lanka_money_transfer_app/widgets/reusable_widgets.dart';
 
@@ -15,8 +14,15 @@ class BoardingScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset("assets/images/boarding_screen_image.png"),
-            SizedBox(height: 20),
+            //logoWidget(context, "assets/images/boarding_screen_image.png"),
+            Image.asset(
+                "assets/images/boarding_screen_image.png",
+              fit: BoxFit.fitWidth,
+              width: 400,
+              height: 500,
+              alignment: Alignment.center,
+            ),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment:  MainAxisAlignment.center,
               children: [
@@ -28,7 +34,7 @@ class BoardingScreen extends StatelessWidget {
                           MaterialPageRoute(
                               builder: (context) =>  const LoginScreen()));
                     }),
-                SizedBox(width: 50),
+                const SizedBox(width: 50),
                 elevatedGreenButton(
                   'Create Account',
                       () {

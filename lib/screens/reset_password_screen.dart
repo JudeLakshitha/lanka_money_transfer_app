@@ -13,12 +13,12 @@ class ResetPasswordScreen extends StatefulWidget {
 
 class ResetPasswordScreenState extends State<ResetPasswordScreen> {
 
-  bool _passwordValidation = false;
-  bool _confirmPasswordValidation = false;
+  //bool _passwordValidation = false;
+  //bool _confirmPasswordValidation = false;
   bool passwordVisibility = true;
   bool obscureText = true;
   bool confirmObscureText = true;
-  Color _visibilityColor = AppColors.appGrey;
+  //Color _visibilityColor = AppColors.appGrey;
 
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
@@ -26,8 +26,8 @@ class ResetPasswordScreenState extends State<ResetPasswordScreen> {
   FocusNode confirmPasswordFocusNode = FocusNode();
 
   //final AuthValidators authValidator = AuthValidators();
-  final GlobalKey<FormState> _password = GlobalKey<FormState>();
-  final GlobalKey<FormState> _confirmPassword = GlobalKey<FormState>();
+  // final GlobalKey<FormState> _password = GlobalKey<FormState>();
+  // final GlobalKey<FormState> _confirmPassword = GlobalKey<FormState>();
 
   void toggleObscureText() {
     setState(() {
@@ -53,7 +53,7 @@ class ResetPasswordScreenState extends State<ResetPasswordScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: appBar(
-        Text(''),
+        const Text(''),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -86,7 +86,7 @@ class ResetPasswordScreenState extends State<ResetPasswordScreen> {
                Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: textFieldTag('Confirm Password'),
                 ),
               ),

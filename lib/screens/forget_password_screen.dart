@@ -4,17 +4,17 @@ import '../widgets/reusable_widgets.dart';
 import 'login_screen.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
-  ForgetPasswordScreen({super.key});
+  const ForgetPasswordScreen({super.key});
 
   @override
   ForgetPasswordScreenState createState() => ForgetPasswordScreenState();
 }
 
 class ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
-  bool _userNameValidate = false;
-  bool _passwordValidate = false;
+  // bool _userNameValidate = false;
+  // bool _passwordValidate = false;
   bool passwordVisibility = true;
-  Color _visibilityColor = AppColors.appGrey;
+  // Color _visibilityColor = AppColors.appGrey;
 
   TextEditingController nicPassportController = TextEditingController();
 
@@ -29,7 +29,7 @@ class ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: appBar(
-        Text(''),
+        const Text(''),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -70,7 +70,7 @@ class ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                   child: elevatedBlueButton(
                       context,
                       'Submit',
-                      NavigateTo
+                      navigateTo
                   ),
                 ),
               ),
@@ -82,6 +82,6 @@ class ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   }
 }
 
-NavigateTo() {
-  MaterialPageRoute(builder: (context) => LoginScreen());
+navigateTo() {
+  MaterialPageRoute(builder: (context) => const LoginScreen());
 }

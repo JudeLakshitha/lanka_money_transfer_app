@@ -21,6 +21,7 @@ TextField baseTextField(
     ImageIcon suffixIcon,
     TextInputType textInputType,
     String errorText) {
+
   bool fieldIsEmpty;
   Color suffixIconColor;
   textEditingController.text.isEmpty
@@ -328,7 +329,7 @@ OtpTextField otpTextField() {
       ),
       filled: false,
     ),
-    textStyle: TextStyle(
+    textStyle: const TextStyle(
         fontSize: 14, color: AppColors.appGrey, fontWeight: FontWeight.bold),
   );
 }

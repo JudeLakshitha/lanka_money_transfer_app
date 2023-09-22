@@ -1,6 +1,5 @@
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lanka_money_transfer_app/widgets/reusable_widgets.dart';
 import '../utils/style.dart';
 
@@ -12,11 +11,11 @@ class LoginScreen extends StatefulWidget {
 }
 
 class LoginScreenState extends State<LoginScreen> {
-  bool _userNameValidattion = false;
-  bool _passwordValidation = false;
+  //bool _userNameValidattion = false;
+  //bool _passwordValidation = false;
   bool passwordVisibility = true;
   bool obscureText = true;
-  Color _visibilityColor = AppColors.appGrey;
+  //Color _visibilityColor = AppColors.appGrey;
 
   TextEditingController userNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -24,8 +23,8 @@ class LoginScreenState extends State<LoginScreen> {
   FocusNode passwordFocusNode = FocusNode();
 
   //final AuthValidators authValidator = AuthValidators();
-  final GlobalKey<FormState> _password = GlobalKey<FormState>();
-  final GlobalKey<FormState> _confirmPassword = GlobalKey<FormState>();
+  // final GlobalKey<FormState> _password = GlobalKey<FormState>();
+  // final GlobalKey<FormState> _confirmPassword = GlobalKey<FormState>();
 
   void toggleObscureText() {
     setState(() {
@@ -107,7 +106,7 @@ class LoginScreenState extends State<LoginScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       "Cannot remember the password ?",
                       textAlign: TextAlign.left,
                       style: TextStyle(
@@ -120,7 +119,7 @@ class LoginScreenState extends State<LoginScreen> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => LoginScreen()));
+                                builder: (context) => const LoginScreen()));
                       },
                       child: const Text(
                         " Reset Password",
