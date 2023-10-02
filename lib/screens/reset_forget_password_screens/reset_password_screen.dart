@@ -1,23 +1,25 @@
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lanka_money_transfer_app/widgets/reusable_widgets.dart';
-import '../utils/style.dart';
+import '../../utils/style.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
-  const ResetPasswordScreen({super.key});
+  final _resetPasswordGlobalKey = GlobalKey();
+  final _resetConfirmPasswordGlobalKey = GlobalKey();
+
+  ResetPasswordScreen({super.key});
 
   @override
   ResetPasswordScreenState createState() => ResetPasswordScreenState();
 }
 
 class ResetPasswordScreenState extends State<ResetPasswordScreen> {
-
   //bool _passwordValidation = false;
   //bool _confirmPasswordValidation = false;
   bool passwordVisibility = true;
   bool obscureText = true;
   bool confirmObscureText = true;
+
   //Color _visibilityColor = AppColors.appGrey;
 
   TextEditingController passwordController = TextEditingController();
@@ -49,9 +51,8 @@ class ResetPasswordScreenState extends State<ResetPasswordScreen> {
 
   @override
   Widget build(context) {
-
     return Scaffold(
-      backgroundColor: Colors.white,
+      //backgroundColor: Colors.white,
       appBar: appBar(
         const Text(''),
       ),
@@ -60,14 +61,12 @@ class ResetPasswordScreenState extends State<ResetPasswordScreen> {
           child: Column(
             children: <Widget>[
               const SizedBox(width: double.infinity),
-              logoWidget(context, "assets/images/reset_password_screen_logo.png"),
-               titleText('Reset Password'),
+              logoWidget(
+                  context, "assets/images/reset_password_screen_logo.png"),
+              titleText('Reset Password'),
               const SizedBox(height: 8.0),
-
               baseText('Enter a new password to reset the password ',
-                  FontWeight.normal,
-                  AppColors.appGrey
-              ),
+                  FontWeight.normal, AppColors.appGrey),
               const SizedBox(height: 50),
               Align(
                 alignment: Alignment.centerLeft,
@@ -79,11 +78,21 @@ class ResetPasswordScreenState extends State<ResetPasswordScreen> {
               const SizedBox(height: 8.0),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: passwordTextField(passwordController, obscureText,
-                    confirmPasswordFocusNode, toggleObscureText),
+                child: passwordTextField(
+                  passwordController,
+                  obscureText,
+                  confirmPasswordFocusNode,
+                  toggleObscureText,
+                  (value) {
+                    print(value);
+                  },
+                  (value) {
+                    print(value);
+                  },
+                ),
               ),
               const SizedBox(height: 20),
-               Align(
+              Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -94,10 +103,17 @@ class ResetPasswordScreenState extends State<ResetPasswordScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: passwordTextField(
-                    confirmPasswordController,
-                    confirmObscureText,
-                    passwordFocusNode,
-                    toggleConfirmObscureText),
+                  confirmPasswordController,
+                  confirmObscureText,
+                  passwordFocusNode,
+                  toggleConfirmObscureText,
+                  (value) {
+                    print(value);
+                  },
+                  (value) {
+                    print(value);
+                  },
+                ),
               ),
               const SizedBox(height: 20),
               Container(
@@ -106,9 +122,7 @@ class ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 child: SizedBox(
                   width: double.infinity,
                   height: 50,
-                  child: elevatedBlueButton(context,'Submit',
-                      navigateTo
-                  ),
+                  child: elevatedBlueButton( 'Submit', navigateTo),
                 ),
               )
             ],
@@ -119,7 +133,7 @@ class ResetPasswordScreenState extends State<ResetPasswordScreen> {
   }
 }
 
-void navigateTo(){
+void navigateTo() {
   Fluttertoast.showToast(
       msg: "Pressed Submit Button",
       toastLength: Toast.LENGTH_SHORT,
@@ -127,6 +141,5 @@ void navigateTo(){
       timeInSecForIosWeb: 1,
       backgroundColor: Colors.red,
       textColor: Colors.blue,
-      fontSize: 16.0
-  );
+      fontSize: 16.0);
 }

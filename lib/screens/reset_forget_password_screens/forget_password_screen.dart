@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import '../utils/style.dart';
-import '../widgets/reusable_widgets.dart';
-import 'login_screen.dart';
+import '../../utils/style.dart';
+import '../../widgets/reusable_widgets.dart';
+import '../login_screen.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
-  const ForgetPasswordScreen({super.key});
+  final _nicGlobalKey = GlobalKey();
+
+  ForgetPasswordScreen({super.key});
 
   @override
   ForgetPasswordScreenState createState() => ForgetPasswordScreenState();
@@ -14,6 +16,7 @@ class ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   // bool _userNameValidate = false;
   // bool _passwordValidate = false;
   bool passwordVisibility = true;
+
   // Color _visibilityColor = AppColors.appGrey;
 
   TextEditingController nicPassportController = TextEditingController();
@@ -53,12 +56,18 @@ class ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: baseTextField(
-                    nicPassportController,
-                    const ImageIcon(AssetImage('assets/icons/id_icon.png')),
-                    const ImageIcon(
-                        AssetImage('assets/icons/validate_mark.png')),
-                    TextInputType.text,
-                    'NIC/Passport field cannot be empty'),
+                  nicPassportController,
+                  const ImageIcon(AssetImage('assets/icons/id_icon.png')),
+                  const ImageIcon(AssetImage('assets/icons/validate_mark.png')),
+                  TextInputType.text,
+                  'NIC/Passport field cannot be empty',
+                  (value) {
+                    print(value);
+                  },
+                  (value) {
+                    print(value);
+                  },
+                ),
               ),
               const SizedBox(height: 20),
               Container(
@@ -67,11 +76,7 @@ class ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 child: SizedBox(
                   width: double.infinity,
                   height: 50,
-                  child: elevatedBlueButton(
-                      context,
-                      'Submit',
-                      navigateTo
-                  ),
+                  child: elevatedBlueButton('Submit', navigateTo),
                 ),
               ),
             ],
@@ -83,5 +88,5 @@ class ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
 }
 
 navigateTo() {
-  MaterialPageRoute(builder: (context) => const LoginScreen());
+  MaterialPageRoute(builder: (context) => LoginScreen());
 }

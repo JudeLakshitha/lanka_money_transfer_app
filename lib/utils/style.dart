@@ -8,6 +8,10 @@ class AppColors {
   static Color greyShade400 = Colors.grey.shade400;
   static const Color white = Colors.white;
   static const Color red = Colors.red;
+  static final  darkColorScheme = ColorScheme.fromSeed(
+    brightness: Brightness.dark,
+      seedColor: const Color.fromARGB(255, 96, 59, 181)
+  );
 }
 
 class AppStyles {

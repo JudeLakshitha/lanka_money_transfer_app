@@ -16,7 +16,7 @@ class BoardingScreen extends StatelessWidget {
           children: [
             //logoWidget(context, "assets/images/boarding_screen_image.png"),
             Image.asset(
-                "assets/images/boarding_screen_image.png",
+              "assets/images/boarding_screen_image.png",
               fit: BoxFit.fitWidth,
               width: 400,
               height: 500,
@@ -24,24 +24,20 @@ class BoardingScreen extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Row(
-              mainAxisAlignment:  MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                elevatedGreenButton(
-                    'Login',
-                        () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>  const LoginScreen()));
-                    }),
+                elevatedGreenButton('Login', () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()));
+                }),
                 const SizedBox(width: 50),
                 elevatedGreenButton(
                   'Create Account',
-                      () {
+                  () {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const SignUpScreen()));
+                            builder: (context) =>  SignUpScreen()));
                   },
                 ),
               ],

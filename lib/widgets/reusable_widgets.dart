@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import '../utils/style.dart';
 
@@ -15,13 +16,17 @@ Image logoWidget(context, String imageName) {
   );
 }
 
-TextField baseTextField(
-    TextEditingController textEditingController,
-    ImageIcon prefixIcon,
-    ImageIcon suffixIcon,
-    TextInputType textInputType,
-    String errorText) {
 
+
+TextFormField baseTextField(
+  TextEditingController textEditingController,
+  ImageIcon prefixIcon,
+  ImageIcon suffixIcon,
+  TextInputType textInputType,
+  String errorText,
+  FormFieldValidator validator,
+  ValueChanged<String> onChanged,
+) {
   bool fieldIsEmpty;
   Color suffixIconColor;
   textEditingController.text.isEmpty
@@ -31,19 +36,20 @@ TextField baseTextField(
       ? suffixIconColor = AppColors.appGrey
       : suffixIconColor = AppColors.appGreen;
 
-  return TextField(
+  return TextFormField(
     controller: textEditingController,
     enableSuggestions: true,
     //autocorrect: true,
     cursorColor: AppColors.appGrey,
     keyboardType: textInputType,
     focusNode: FocusNode().parent,
-    onChanged: (value) {},
+    validator: validator,
+    onChanged: onChanged,
     style: const TextStyle(
       color: AppColors.appGrey,
     ),
     decoration: InputDecoration(
-        //errorText:validation? errorText :null,
+        //errorText:validator.toString().isEmpty? errorText :null,
         errorBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: AppColors.red),
           borderRadius: AppStyles.textFieldCornerCircularRadius10,
@@ -66,6 +72,62 @@ TextField baseTextField(
         ),
         filled: false,
         contentPadding: EdgeInsets.zero),
+  );
+}
+
+TextField basePrefixFreeTextField(
+    TextEditingController textEditingController,
+    //ImageIcon prefixIcon,
+    ImageIcon suffixIcon,
+    TextInputType textInputType,
+    String errorText) {
+  bool fieldIsEmpty;
+  Color suffixIconColor;
+  textEditingController.text.isEmpty
+      ? fieldIsEmpty = true
+      : fieldIsEmpty = false;
+  textEditingController.text.isEmpty
+      ? suffixIconColor = AppColors.appGrey
+      : suffixIconColor = AppColors.appGreen;
+
+  return TextField(
+    maxLength: 12,
+    textAlign: TextAlign.center,
+    controller: textEditingController,
+    enableSuggestions: true,
+    cursorColor: AppColors.appGrey,
+    keyboardType: textInputType,
+    focusNode: FocusNode().parent,
+    onChanged: (value) {},
+    style: const TextStyle(
+      color: AppColors.appGrey,
+    ),
+    decoration: InputDecoration(
+      counterText: '',
+      //errorText:validation? errorText :null,
+      errorBorder: OutlineInputBorder(
+        borderSide: const BorderSide(color: AppColors.red),
+        borderRadius: AppStyles.textFieldCornerCircularRadius10,
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderSide: const BorderSide(color: AppColors.red),
+        borderRadius: AppStyles.textFieldCornerCircularRadius10,
+      ),
+      //prefixIcon: prefixIcon,
+      //prefixIconColor: AppColors.appGrey,
+      suffixIcon: suffixIcon,
+      suffixIconColor: suffixIconColor,
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: AppColors.greyShade400),
+        borderRadius: AppStyles.textFieldCornerCircularRadius10,
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: AppColors.greyShade400),
+        borderRadius: AppStyles.textFieldCornerCircularRadius10,
+      ),
+      filled: false,
+      contentPadding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+    ),
   );
 }
 
@@ -185,10 +247,16 @@ Text baseText(String text, FontWeight fontWeight, Color color) {
   );
 }
 
-TextField passwordTextField(TextEditingController controller, bool obscureText,
-    FocusNode focusNode, VoidCallback? toggleObscureText) {
+TextFormField passwordTextField(
+  TextEditingController controller,
+  bool obscureText,
+  FocusNode focusNode,
+  VoidCallback? toggleObscureText,
+  FormFieldValidator validator,
+  ValueChanged onChanged,
+) {
   Color visibilityColor = AppColors.appGrey;
-  return TextField(
+  return TextFormField(
     controller: controller,
     obscureText: obscureText,
     enableSuggestions: false,
@@ -261,8 +329,7 @@ Text titleText(String text) {
   );
 }
 
-ElevatedButton elevatedBlueButton(
-    BuildContext context, String text, VoidCallback? onTap) {
+ElevatedButton elevatedBlueButton(String text, VoidCallback? onTap) {
   return ElevatedButton(
     onPressed: onTap,
     style: ElevatedButton.styleFrom(
@@ -344,7 +411,7 @@ AppBar appBar(Text title) {
       fontSize: 18.0,
       fontWeight: FontWeight.bold,
     ),
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.transparent,
     leading: const BackButton(color: AppColors.appGrey),
   );
 }

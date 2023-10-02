@@ -1,10 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lanka_money_transfer_app/screens/login_screen.dart';
-import 'package:lanka_money_transfer_app/screens/otp_screen.dart';
 import 'package:lanka_money_transfer_app/widgets/reusable_widgets.dart';
 import '../utils/style.dart';
+import 'otp_screen.dart';
 
 const List<String> countryList = <String>[
   'Select Country',
@@ -32,7 +31,15 @@ const List<String> countryCodeList = <String>[
 ];
 
 class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+  final _nameGlobalKey = GlobalKey();
+  final _addressGlobalKey = GlobalKey();
+  final _phoneGlobalKey = GlobalKey();
+  final _nicGlobalKey = GlobalKey();
+  final _emailGlobalKey = GlobalKey();
+  final _passwordGlobalKey = GlobalKey();
+  final _confirmPasswordGlobalKey = GlobalKey();
+
+  SignUpScreen({super.key});
 
   @override
   SignUpScreenState createState() => SignUpScreenState();
@@ -49,6 +56,7 @@ class SignUpScreenState extends State<SignUpScreen> {
   bool passwordVisibility = true;
   bool obscureText = true;
   bool confirmObscureText = true;
+
   //Color _visibilityColor = AppColors.appGrey;
 
   TextEditingController nameController = TextEditingController();
@@ -87,9 +95,8 @@ class SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(context) {
-
     return Scaffold(
-      backgroundColor: Colors.white,
+      //backgroundColor: Colors.white,
       appBar: appBar(const Text('')),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -113,11 +120,18 @@ class SignUpScreenState extends State<SignUpScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: baseTextField(
-                    nameController,
-                    const ImageIcon(AssetImage("assets/icons/user_icon.png")),
-                    const ImageIcon(null),
-                    TextInputType.text,
-                    'Name field cannot be empty'),
+                  nameController,
+                  const ImageIcon(AssetImage("assets/icons/user_icon.png")),
+                  const ImageIcon(null),
+                  TextInputType.text,
+                  'Name field cannot be empty',
+                  (value) {
+                    print(value);
+                  },
+                  (value) {
+                    print(value);
+                  },
+                ),
               ),
               const SizedBox(height: 10),
               Align(
@@ -131,12 +145,18 @@ class SignUpScreenState extends State<SignUpScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: baseTextField(
-                    addressController,
-                    const ImageIcon(
-                        AssetImage("assets/icons/location_icon.png")),
-                    const ImageIcon(null),
-                    TextInputType.text,
-                    'Address field cannot be empty'),
+                  addressController,
+                  const ImageIcon(AssetImage("assets/icons/location_icon.png")),
+                  const ImageIcon(null),
+                  TextInputType.text,
+                  'Address field cannot be empty',
+                  (value) {
+                    print(value);
+                  },
+                  (value) {
+                    print(value);
+                  },
+                ),
               ),
               const SizedBox(height: 10),
               Align(
@@ -172,19 +192,19 @@ class SignUpScreenState extends State<SignUpScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Expanded(
-                        flex: 2,
+                    Flexible(
+                        flex: 3,
                         child: dropdownButtonFormField(
                             countryCodeList,
                             const ImageIcon(
                                 AssetImage("assets/icons/arrow_back_icon.png")),
                             const ImageIcon(null))),
-                    const Spacer(),
-                    Expanded(
-                        flex: 3,
-                        child: baseTextField(
+                    SizedBox(width: 5),
+                    Flexible(
+                        flex: 4,
+                        child: basePrefixFreeTextField(
                             mobileNoController,
-                            const ImageIcon(null),
+                            //const ImageIcon(null),
                             const ImageIcon(
                                 AssetImage('assets/icons/validate_mark.png')),
                             TextInputType.number,
@@ -204,12 +224,18 @@ class SignUpScreenState extends State<SignUpScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: baseTextField(
-                    nicPassportController,
-                    const ImageIcon(AssetImage('assets/icons/id_icon.png')),
-                    const ImageIcon(
-                        AssetImage('assets/icons/validate_mark.png')),
-                    TextInputType.text,
-                    'NIC/Passport field cannot be empty'),
+                  nicPassportController,
+                  const ImageIcon(AssetImage('assets/icons/id_icon.png')),
+                  const ImageIcon(AssetImage('assets/icons/validate_mark.png')),
+                  TextInputType.text,
+                  'NIC/Passport field cannot be empty',
+                  (value) {
+                    print(value);
+                  },
+                  (value) {
+                    print(value);
+                  },
+                ),
               ),
               const SizedBox(height: 10),
               Align(
@@ -222,12 +248,18 @@ class SignUpScreenState extends State<SignUpScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: baseTextField(
-                    emailController,
-                    const ImageIcon(AssetImage("assets/icons/icon_at.png")),
-                    const ImageIcon(
-                        AssetImage('assets/icons/validate_mark.png')),
-                    TextInputType.emailAddress,
-                    'Email field cannot be empty'),
+                  emailController,
+                  const ImageIcon(AssetImage("assets/icons/icon_at.png")),
+                  const ImageIcon(AssetImage('assets/icons/validate_mark.png')),
+                  TextInputType.emailAddress,
+                  'Email field cannot be empty',
+                  (value) {
+                    print(value);
+                  },
+                  (value) {
+                    print(value);
+                  },
+                ),
               ),
               const SizedBox(height: 10),
               Align(
@@ -240,11 +272,17 @@ class SignUpScreenState extends State<SignUpScreen> {
               const SizedBox(height: 8.0),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: passwordTextField(passwordController, obscureText,
-                    confirmPasswordFocusNode, toggleObscureText),
+                child: passwordTextField(
+                  passwordController,
+                  obscureText,
+                  confirmPasswordFocusNode,
+                  toggleObscureText,
+                  (value) {},
+                  (value) {},
+                ),
               ),
               const SizedBox(height: 10),
-               Align(
+              Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -255,17 +293,20 @@ class SignUpScreenState extends State<SignUpScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: passwordTextField(
-                    confirmPasswordController,
-                    confirmObscureText,
-                    passwordFocusNode,
-                    toggleConfirmObscureText),
+                  confirmPasswordController,
+                  confirmObscureText,
+                  passwordFocusNode,
+                  toggleConfirmObscureText,
+                  (value) {},
+                  (value) {},
+                ),
               ),
               const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: Row(
                   children: [
-                     Flexible(
+                    Flexible(
                       child: baseCheckBox(true),
                     ),
                     const Flexible(
@@ -307,13 +348,10 @@ class SignUpScreenState extends State<SignUpScreen> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: elevatedBlueButton(
-                    context,
                     'Register',
                     () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const OtpScreen()));
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => OtpScreen()));
                     },
                   ),
                 ),
@@ -342,7 +380,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const LoginScreen()));
+                                  builder: (context) => LoginScreen()));
                         },
                         child: const Text(
                           " Login",

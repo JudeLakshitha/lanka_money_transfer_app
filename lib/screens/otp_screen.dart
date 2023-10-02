@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:lanka_money_transfer_app/screens/reset_password_screen.dart';
+import 'package:lanka_money_transfer_app/screens/reset_forget_password_screens/reset_password_screen.dart';
 import '../utils/style.dart';
 import '../widgets/reusable_widgets.dart';
 import 'login_screen.dart';
 
 class OtpScreen extends StatefulWidget {
-  const OtpScreen({super.key});
+  final _otpGlobalKey = GlobalKey();
+
+  OtpScreen({super.key});
 
   @override
   OtpScreenState createState() => OtpScreenState();
@@ -15,6 +17,7 @@ class OtpScreenState extends State<OtpScreen> {
   // bool _userNameValidate = false;
   // bool _passwordValidate = false;
   bool passwordVisibility = true;
+
   // Color _visibilityColor = AppColors.appGrey;
 
   final usernameController = TextEditingController();
@@ -30,7 +33,7 @@ class OtpScreenState extends State<OtpScreen> {
   @override
   Widget build(context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      //backgroundColor: Colors.white,
       appBar: appBar(
         const Text(''),
       ),
@@ -61,13 +64,12 @@ class OtpScreenState extends State<OtpScreen> {
                   width: double.infinity,
                   height: 50,
                   child: elevatedBlueButton(
-                      context,
-                      'Login',
-                        () {
+                    'Login',
+                    () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const ResetPasswordScreen()));
+                              builder: (context) => ResetPasswordScreen()));
                     },
                   ),
                 ),
@@ -78,8 +80,8 @@ class OtpScreenState extends State<OtpScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                     const Flexible(
-                      flex:1,
+                    const Flexible(
+                      flex: 1,
                       child: Text(
                         "Did not received OTP ?",
                         textAlign: TextAlign.left,
@@ -96,7 +98,7 @@ class OtpScreenState extends State<OtpScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const LoginScreen()));
+                                  builder: (context) => LoginScreen()));
                         },
                         child: const Text(
                           " Resend again",
@@ -117,4 +119,3 @@ class OtpScreenState extends State<OtpScreen> {
     );
   }
 }
-
